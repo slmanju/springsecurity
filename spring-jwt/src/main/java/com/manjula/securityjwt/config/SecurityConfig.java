@@ -39,10 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().disable();
         http.logout().disable();
 
-
-        // Filter for the login requests
         http.addFilterBefore(new LoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class);
-        // Filter for other requests to check JWT in header
         http.addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
