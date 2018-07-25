@@ -1,4 +1,4 @@
-package com.manjula.securityjwt;
+package com.manjula.securityjwt.config;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

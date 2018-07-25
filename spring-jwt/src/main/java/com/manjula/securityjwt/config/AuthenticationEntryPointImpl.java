@@ -1,4 +1,4 @@
-package com.manjula.securityjwt;
+package com.manjula.securityjwt.config;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

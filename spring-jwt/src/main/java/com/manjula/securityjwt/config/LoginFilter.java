@@ -1,4 +1,4 @@
-package com.manjula.securityjwt;
+package com.manjula.securityjwt.config;
 
 import java.io.IOException;
 import java.util.Collections;

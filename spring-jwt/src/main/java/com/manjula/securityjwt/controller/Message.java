@@ -1,4 +1,4 @@
-package com.manjula.securityjwt;
+package com.manjula.securityjwt.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
