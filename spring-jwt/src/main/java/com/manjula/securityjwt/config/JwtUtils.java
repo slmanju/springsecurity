@@ -9,10 +9,10 @@ public final class JwtUtils {
 
     public static final long EXPIRATION_TIME = 864_000_00; // 1 day in milliseconds
     public static final String SECRET_KEY = "these violent delights have violent ends";
-    public static final String PREFIX = "Bearer";
+    public static final String TOKEN_PREFIX = "Bearer";
 
     public static String authorization(String name) {
-        return PREFIX + " " + generate(name);
+        return TOKEN_PREFIX + " " + generate(name);
     }
 
     public static String generate(String name) {
@@ -25,7 +25,7 @@ public final class JwtUtils {
     public static String parse(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token.replace(PREFIX, ""))
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                 .getBody()
                 .getSubject();
     }

@@ -1,51 +1,38 @@
 package com.manjula.securityjwt.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 
 /**
  * Filter for the login requests
  */
-public class LoginFilter extends AbstractAuthenticationProcessingFilter {
+public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
-    public LoginFilter(String url, AuthenticationManager authManager) {
-        super(new AntPathRequestMatcher(url));
+    public LoginFilter(AuthenticationManager authManager) {
         setAuthenticationManager(authManager);
     }
 
-    @Override
-    public Authentication attemptAuthentication(
-            HttpServletRequest req, HttpServletResponse res)
-            throws AuthenticationException, IOException, ServletException {
-        AccountCredentials credentials = new ObjectMapper().readValue(req.getInputStream(), AccountCredentials.class);
-        return getAuthenticationManager().authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        credentials.getUsername(),
-                        credentials.getPassword(),
-                        Collections.emptyList()
-                )
-        );
-    }
-
+    /**
+     * After Spring finds the user by username and verifies that the passwords match,
+     * it calls the successfulAuthentication() method to store the user as logged in.
+     * We override that method (from UsernamePasswordAuthenticationFilter)
+     * in order to provide a token instead of a Session object.
+     */
     @Override
     protected void successfulAuthentication(
             HttpServletRequest req,
             HttpServletResponse res, FilterChain chain,
             Authentication auth) throws IOException, ServletException {
-        res.addHeader("Authorization", JwtUtils.authorization(auth.getName()));
-        res.addHeader("Access-Control-Expose-Headers", "Authorization");
+        res.addHeader(HttpHeaders.AUTHORIZATION, JwtUtils.authorization(auth.getName()));
+        res.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization");
     }
 
 }

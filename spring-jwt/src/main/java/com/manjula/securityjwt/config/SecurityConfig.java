@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().disable();
         http.logout().disable();
 
-        http.addFilterBefore(new LoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new LoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()

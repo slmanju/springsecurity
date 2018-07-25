@@ -1,5 +1,6 @@
 package com.manjula.securityjwt.config;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,8 +23,8 @@ public class AuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        String token = ((HttpServletRequest) request).getHeader("Authorization");
-        if (token != null) {
+        String token = ((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION);
+        if (token != null && token.startsWith(JwtUtils.TOKEN_PREFIX)) {
             try {
                 String user = JwtUtils.parse(token);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, emptyList());
