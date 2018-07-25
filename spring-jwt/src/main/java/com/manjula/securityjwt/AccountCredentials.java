@@ -1,4 +1,4 @@
-package com.manjula.security;
+package com.manjula.securityjwt;
 
 public class AccountCredentials {
     private String username;

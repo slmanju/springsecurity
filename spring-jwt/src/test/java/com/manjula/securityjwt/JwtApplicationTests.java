@@ -1,4 +1,4 @@
-package com.manjula.security;
+package com.manjula.securityjwt;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
