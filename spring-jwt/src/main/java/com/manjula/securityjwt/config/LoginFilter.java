@@ -8,7 +8,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
@@ -54,8 +53,8 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     protected void successfulAuthentication(
             HttpServletRequest request,
             HttpServletResponse response, FilterChain chain,
-            Authentication auth) throws IOException, ServletException {
-        response.addHeader(HttpHeaders.AUTHORIZATION, JwtUtils.authorization(auth.getName()));
+            Authentication authentication) throws IOException, ServletException {
+        response.addHeader(HttpHeaders.AUTHORIZATION, JwtUtils.authorization(authentication));
         response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization");
     }
 
